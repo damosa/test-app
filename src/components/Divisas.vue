@@ -1,29 +1,28 @@
 <template>
   <div class="container">
     <div>
-      <h1>Aplicación de divisas</h1>
+      <h1><strong>Aplicación de divisas</strong></h1>
     </div>
     <div>
       <b-card no-body>
         <b-tabs card>
           <b-tab title="Conversion" active>
-            <b-card-text>Conversion</b-card-text>
-            <h4>Monto</h4>
-            <b-input v-model="amount" /><br />
-            <h4>Moneda Origen</h4>
+            <h5>Monto</h5>
+            <b-input v-model="amount"/><br />
+            <h5>Moneda Origen</h5>
             <div>
               <b-form-select
                 v-model="sourceValue"
                 :options="options"
               ></b-form-select>
-            </div>
-            <h4>Moneda Objetivo</h4>
+            </div><br>
+            <h5>Moneda Objetivo</h5>
             <div>
               <b-form-select
                 v-model="targetValue"
                 :options="options"
               ></b-form-select>
-            </div>
+            </div><br>
             <b-button variant="success" @click="convert()">Convertir</b-button>
             <b-card
               v-if="mountConverted"
@@ -63,6 +62,7 @@ export default {
       sourceValue: null,
       targetValue: null,
       mountConverted: 0,
+      errors: [],
     };
   },
   mounted() {
@@ -87,6 +87,21 @@ export default {
       });
     },
     async convert() {
+      if(this.amount=== 0 ){
+        alert('Este campo no debe ser cero')
+        return false;
+      }
+       if(this.amount < 0 ){
+        alert('Este campo no debe ser negativo')
+        return false;
+      }
+      if(this.amount==="a"){
+         alert('Este campo no puede ser una letra')
+         return false;
+      }
+      if(!this.amount){
+        alert('Este campo debe ser requerido')
+      }
       const rates = await this.getDivisa();
       const sourceRate = rates[this.sourceValue];
       const targetRate = rates[this.targetValue];

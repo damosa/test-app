@@ -1,7 +1,6 @@
 <template>
   <div>
-    <b-card-text>Historial</b-card-text>
-    <h4>Fecha consulta: {{ currentDate }}</h4>
+    <h4><strong>Fecha de consulta: {{ currentDate }}</strong></h4>
     <div>
       <b-table striped hover :items="historical" :fields="fields"></b-table>
     </div>
