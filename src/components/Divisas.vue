@@ -21,6 +21,10 @@
           </b-tab>
           <b-tab title="Historial">
             <b-card-text>Historial</b-card-text>
+            <h4>Fecha consulta:</h4>
+            <div>
+              <b-table></b-table>
+            </div>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -39,6 +43,28 @@ export default {
       mountConverted: null,
     };
   },
+  mounted(){
+      this.getDivisa();
+  },
+
+  methods: {
+    getDivisa() {
+      axios
+        .get(
+          "https://openexchangerates.org/api/latest.json?app_id=07709e2749b04939ac020f82d6da06d3",
+        )
+        .then((response) => (console.log(response.data.rates)));
+    },
+
+    getNameDivisas() {
+      axios
+        .get(
+          "https://openexchangerates.org/api/currencies.json?ba2aec586c2e4bc9a56a970dd9f781c3"
+        )
+        .then((response) => (this.targetRate = response.rates));
+    },
+  },
 };
 </script>
-<style scoped></style>
+<style scoped>
+</style>
