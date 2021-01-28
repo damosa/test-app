@@ -51,6 +51,7 @@
 <script>
 import DataService from "../services/DataService";
 export default {
+  name:"Divisas",
   data() {
     return {
       amount: 0,

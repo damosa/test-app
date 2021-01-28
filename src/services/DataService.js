@@ -1,4 +1,4 @@
-import axios from "../../http-common";
+import axios from "../http-common";
 
 const APP_ID = "ba2aec586c2e4bc9a56a970dd9f781c3"
 class DataService {
