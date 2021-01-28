@@ -25,7 +25,7 @@
               ></b-form-select>
             </div>
             <b-button variant="success" @click="convert()">Convertir</b-button>
-            <b-card v-if="mountConverted">
+            <b-card v-if="mountConverted"
               title="Conversión"
               tag="article"
               style="width: 100%"
