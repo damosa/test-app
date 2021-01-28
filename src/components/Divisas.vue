@@ -25,23 +25,22 @@
               ></b-form-select>
             </div>
             <b-button variant="success" @click="convert()">Convertir</b-button>
-            <b-card v-if="mountConverted"
+            <b-card
+              v-if="mountConverted"
               title="Conversión"
               tag="article"
               style="width: 100%"
               class="mb-2"
             >
               <b-card-text>
-                {{`${amount} ${sourceValue} = ${mountConverted} ${targetValue}`}}
+                {{
+                  `${amount} ${sourceValue} = ${mountConverted} ${targetValue}`
+                }}
               </b-card-text>
             </b-card>
           </b-tab>
           <b-tab title="Historial">
-            <b-card-text>Historial</b-card-text>
-            <h4>Fecha consulta:</h4>
-            <div>
-              <b-table></b-table>
-            </div>
+            <Historial />
           </b-tab>
         </b-tabs>
       </b-card>
@@ -50,8 +49,13 @@
 </template>
 <script>
 import DataService from "../services/DataService";
+import Historial from "./Historial.vue";
+
 export default {
-  name:"Divisas",
+  name: "Divisas",
+  components: {
+    Historial,
+  },
   data() {
     return {
       amount: 0,
