@@ -1,28 +1,12 @@
-import http from "../http-common";
-
+import axios from "../http-common";
+const APP_ID = "ba2aec586c2e4bc9a56a970dd9f781c3"
 class DataService {
-  getAll(params) {
-    return http.get("/tutorials", { params });
+  getNamesDivisas() {
+    return axios.get(`/currencies.json?app_id=${APP_ID}`);
   }
 
-  get(id) {
-    return http.get(`/tutorials/${id}`);
-  }
-
-  create(data) {
-    return http.post("/tutorials", data);
-  }
-
-  update(id, data) {
-    return http.put(`/tutorials/${id}`, data);
-  }
-
-  delete(id) {
-    return http.delete(`/tutorials/${id}`);
-  }
-
-  deleteAll() {
-    return http.delete(`/tutorials`);
+  getListDivisas() {
+    return http.get(`/latest.json?app_id=${APP_ID}`);
   }
 }
 
