@@ -13,17 +13,28 @@
             <h4>Moneda Origen</h4>
             <div>
               <b-form-select
-                v-model="sourceRate"
-                :options="sourceOptions"
+                v-model="sourceValue"
+                :options="options"
               ></b-form-select>
             </div>
             <h4>Moneda Objetivo</h4>
             <div>
               <b-form-select
-                v-model="targetRate"
-                :options="sourceOptions"
+                v-model="targetValue"
+                :options="options"
               ></b-form-select>
             </div>
+            <b-button variant="success" @click="convert()">Convertir</b-button>
+            <b-card v-if="mountConverted > 0"
+              title="Conversión"
+              tag="article"
+              style="width: 100%"
+              class="mb-2"
+            >
+              <b-card-text>
+                {{`${amount} ${sourceValue} = ${mountConverted} ${targetValue}`}}
+              </b-card-text>
+            </b-card>
           </b-tab>
           <b-tab title="Historial">
             <b-card-text>Historial</b-card-text>
@@ -35,36 +46,47 @@
         </b-tabs>
       </b-card>
     </div>
-    <b-button variant="success">Convertir</b-button>
   </div>
 </template>
 <script>
-import DataService from '../services/DataService';
+import DataService from "../services/DataService";
 export default {
   data() {
     return {
       amount: 0,
-      sourceRate: null,
-      sourceOptions: [],
-      targetRate: null,
-      mountConverted: null,
+      options: [],
+      sourceValue: null,
+      targetValue: null,
+      mountConverted: 0,
     };
   },
-  mounted(){
-      this.getNameDivisas();
+  mounted() {
+    this.getNameDivisas();
   },
   methods: {
     getDivisa() {
-      
+      return DataService.getListDivisas().then((response) => {
+        console.log("getDivisa data", response.data);
+        const { rates } = response.data;
+        return rates;
+      });
     },
     getNameDivisas() {
-      DataService.getNamesDivisas()
-        .then((response) => {
-          console.log('data', response.data);
-          const {data} = response;
-          const newDataParse = Object.keys(data).map((key) => `${data[key]} (${key})`)
-          this.sourceOptions = newDataParse;
-        });
+      DataService.getNamesDivisas().then((response) => {
+        const { data } = response;
+        const newDataParse = Object.keys(data).map((key) => ({
+          value: key,
+          text: `${data[key]} (${key})`,
+        }));
+        this.options = newDataParse;
+      });
+    },
+    async convert() {
+      const rates = await this.getDivisa();
+      const sourceRate = rates[this.sourceValue];
+      const targetRate = rates[this.targetValue];
+      const mountConverted = (this.amount / sourceRate) * targetRate;
+      this.mountConverted = mountConverted;
     },
   },
 };
