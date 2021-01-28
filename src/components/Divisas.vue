@@ -60,8 +60,10 @@ export default {
     getNameDivisas() {
       DataService.getNamesDivisas()
         .then((response) => {
-          console.log('response', response);
-          this.sourceOptions = response.data;
+          console.log('data', response.data);
+          const {data} = response;
+          const newDataParse = Object.keys(data).map((key) => `${data[key]} (${key})`)
+          this.sourceOptions = newDataParse;
         });
     },
   },
