@@ -12,11 +12,17 @@
             <b-input v-model="amount" /><br />
             <h4>Moneda Origen</h4>
             <div>
-              <b-form-select v-model="sourceRate" :options="sourceOptions"></b-form-select>
+              <b-form-select
+                v-model="sourceRate"
+                :options="sourceOptions"
+              ></b-form-select>
             </div>
             <h4>Moneda Objetivo</h4>
             <div>
-              <b-form-select v-model="targetRate" :options="sourceOptions"></b-form-select>
+              <b-form-select
+                v-model="targetRate"
+                :options="sourceOptions"
+              ></b-form-select>
             </div>
           </b-tab>
           <b-tab title="Historial">
@@ -33,6 +39,7 @@
   </div>
 </template>
 <script>
+import DataService from '../services/DataService';
 export default {
   data() {
     return {
@@ -44,27 +51,20 @@ export default {
     };
   },
   mounted(){
-      this.getDivisa();
+      this.getNameDivisas();
   },
-
   methods: {
     getDivisa() {
-      axios
-        .get(
-          "https://openexchangerates.org/api/latest.json?app_id=07709e2749b04939ac020f82d6da06d3",
-        )
-        .then((response) => (console.log(response.data.rates)));
+      
     },
-
     getNameDivisas() {
-      axios
-        .get(
-          "https://openexchangerates.org/api/currencies.json?ba2aec586c2e4bc9a56a970dd9f781c3"
-        )
-        .then((response) => (this.targetRate = response.rates));
+      DataService.getNamesDivisas()
+        .then((response) => {
+          console.log('response', response);
+          this.sourceOptions = response.data;
+        });
     },
   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
