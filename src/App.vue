@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-    <Divisas/>
+    <Divisas />
   </div>
 </template>
 
 <script>
-import Divisas from './components/Divisas.vue'
+import Divisas from "./components/Divisas.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Divisas
-  }
-}
+    Divisas,
+  },
+};
 </script>
 
-<style> 
+<style>
 </style>
