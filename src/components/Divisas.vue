@@ -9,16 +9,14 @@
       <b-tab title="Conversion" active>
         <b-card-text>Conversion</b-card-text>
         <h4>Monto</h4>
-            <b-input/><br>
+            <b-input v-model="amount"/><br>
         <h4> Moneda Origen</h4>
             <div>
-                <b-form-select v-model="selected" :options="options"></b-form-select>
-                <div class="mt-3"><strong>{{ selected }}</strong></div>
+                <b-form-select v-model="sourceRate"></b-form-select>
             </div>
             <h4> Moneda Objetivo</h4>
             <div>
-                <b-form-select v-model="selected" :options="options"></b-form-select>
-                <div class="mt-3"><strong>{{ selected }}</strong></div>
+                <b-form-select v-model="targetRate"></b-form-select>
             </div>
             </b-tab>
             <b-tab title="Historial">
@@ -27,7 +25,7 @@
             </b-tabs>
         </b-card>
         </div>
-        <button>Convertir</button>
+            <b-button variant="success">Convertir</b-button>
         </div>  
     
 </template>
@@ -36,14 +34,12 @@
 export default {
     data() {
       return {
-        selected: null,
-        options: [
-          { value: null, text: 'Please select an option' },
-          { value: 'a', text: 'This is First option' },
-          { value: 'b', text: 'Selected Option' },
-          { value: { C: '3PO' }, text: 'This is an option with object value' },
-          { value: 'd', text: 'This one is disabled', disabled: true }
-        ]
+        amount: null,
+        sourceRate : null,
+        targetRate: null,
+        mountConverted: null 
+        
+       
       }
     }
   }
